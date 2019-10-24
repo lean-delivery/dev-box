@@ -34,7 +34,7 @@ Read more about Vagrant Ansible provisioners:
 ```yaml
 ansible_folder: '/vagrant/dev-box/ansible/'
 ansible_install_mode: 'pip'
-ansible_version: '2.8.2'
+ansible_version: '2.8.6'
 ansible_become: true
 ansible_playbook: 'playbook.yml'
 ansible_inventory_path: 'host.yml'
@@ -52,7 +52,6 @@ configure_system: true
 configure_env: true
 packages:
   - bash-completion
-  - bash-completion-extras
   - git
   - nano
   - sshpass
@@ -62,11 +61,9 @@ tools:
   - molecule
   - ansible-lint
   - docker
-  - paramiko
   - pywinrm
   - pywinrm[credssp]
   - pywinrm[ntlm]
-  - virtualenv
 environment_vars:
   ANSIBLE_LIBRARY: ~/.ansible/plugins/modules
   ANSIBLE_NOCOLOR: false
@@ -80,7 +77,4 @@ environment_vars:
 docker_installation: true
 docker_users:
   - vagrant
-docker_daemon_opts: '-H fd:// -H unix:///var/run/docker.sock -H tcp://0.0.0.0:2376'
-docker_daemon_config:
-  storage-driver: overlay2
 ```
