@@ -8,20 +8,19 @@
 
   - name: Configure system
     block:
-      - name: Upgrade pip packages
-        pip:
-          name:
-            - 'pip'
-            - 'setuptools'
-          state: present
-          extra_args: --upgrade
-        register: installed_packages
-        until: installed_packages is succeeded
-
       - name: Install packages
         package:
           name: '{{ packages }}'
           state: present
+        register: installed_packages
+        until: installed_packages is succeeded
+
+      - name: Upgrade pip packages
+        pip:
+          name:
+            - 'setuptools'
+          state: present
+          extra_args: --upgrade
         register: installed_packages
         until: installed_packages is succeeded
 
@@ -31,6 +30,14 @@
           state: present
         register: installed_packages
         until: installed_packages is succeeded
+
+      - name: Clone ansible-lint rules
+        git:
+          repo: 'https://github.com/lean-delivery/ansible-lint-rules.git'
+          dest: ~/ansible-lint-rules
+          clone: true
+        become_user: vagrant
+
     become: true
     when: configure_system | bool
 
@@ -58,5 +65,5 @@
     block:
       - name: Docker install
         include_role:
-            name: haxorof.docker_ce
-        when: docker_installation | bool
+            name: lean_delivery.docker
+    when: docker_installation | bool
