@@ -4,7 +4,7 @@
   tasks:
 
   - name: Load variables
-    include_vars: '../vars.yml'
+    include_vars: '../main.yml'
 
   - name: Configure system
     block:
@@ -31,7 +31,14 @@
         register: installed_packages
         until: installed_packages is succeeded
 
-      - name: Clone ansible-lint rules
+      - name: Install ansible-lint
+        pip:
+          name: 'git+https://github.com/ansible/ansible-lint.git'
+          state: present
+        register: installed_package
+        until: installed_package is succeeded
+
+      - name: Clone Lean Delivery ansible-lint rules
         git:
           repo: 'https://github.com/lean-delivery/ansible-lint-rules.git'
           dest: ~/ansible-lint-rules
