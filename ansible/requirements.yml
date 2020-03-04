@@ -1,2 +1,3 @@
 ---
 - src: lean_delivery.docker
+  name: lean_delivery.docker

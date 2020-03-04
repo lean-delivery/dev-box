@@ -34,7 +34,7 @@ Read more about Vagrant Ansible provisioners:
 ```yaml
 ansible_folder: '/vagrant/dev-box/ansible/'
 ansible_install_mode: 'pip'
-ansible_version: '2.8.6'
+ansible_version: '2.9.5'
 ansible_become: true
 ansible_playbook: 'playbook.yml'
 ansible_inventory_path: 'host.yml'
@@ -56,10 +56,10 @@ packages:
   - nano
   - sshpass
   - wget
+  - unzip
 tools:
   - cookiecutter
   - molecule
-  - ansible-lint
   - docker
   - pywinrm
   - pywinrm[credssp]
