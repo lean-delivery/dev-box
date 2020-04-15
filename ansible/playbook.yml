@@ -31,19 +31,19 @@
         register: installed_packages
         until: installed_packages is succeeded
 
-      - name: Install ansible-lint
-        pip:
-          name: 'git+https://github.com/ansible/ansible-lint.git'
-          state: present
-        register: installed_package
-        until: installed_package is succeeded
+      # - name: Install ansible-lint
+      #   pip:
+      #     name: 'git+https://github.com/ansible/ansible-lint.git'
+      #     state: present
+      #   register: installed_package
+      #   until: installed_package is succeeded
 
-      - name: Clone Lean Delivery ansible-lint rules
-        git:
-          repo: 'https://github.com/lean-delivery/ansible-lint-rules.git'
-          dest: ~/ansible-lint-rules
-          clone: true
-        become_user: vagrant
+      # - name: Clone Lean Delivery ansible-lint rules
+      #   git:
+      #     repo: 'https://github.com/lean-delivery/ansible-lint-rules.git'
+      #     dest: ~/ansible-lint-rules
+      #     clone: true
+      #   become_user: vagrant
 
     become: true
     when: configure_system | bool
@@ -74,3 +74,12 @@
         include_role:
             name: lean_delivery.docker
     when: docker_installation | bool
+
+  - name: Terraform block
+    block:
+      - name: Install terraform
+        unarchive:
+          src: "https://releases.hashicorp.com/terraform/{{ tf_version }}/terraform_{{ tf_version }}_linux_amd64.zip"
+          dest: /usr/bin/
+          remote_src: true
+        become: true
